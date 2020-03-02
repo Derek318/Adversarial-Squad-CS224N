@@ -43,7 +43,7 @@ def main(args):
     # Get embeddings
     log.info('Loading embeddings...')
     word_vectors = util.torch_from_json(args.word_emb_file)
-
+    
     # Get model
     log.info('Building model...')
     model = BiDAF(word_vectors=word_vectors,
@@ -73,6 +73,8 @@ def main(args):
 
     # Get data loader
     log.info('Building dataset...')
+    # args.train_record_file is located in args.py
+    #Instantiate the squad model for train dataset from train.npz file
     train_dataset = SQuAD(args.train_record_file, args.use_squad_v2)
     train_loader = data.DataLoader(train_dataset,
                                    batch_size=args.batch_size,
@@ -136,6 +138,8 @@ def main(args):
                                                   args.dev_eval_file,
                                                   args.max_ans_len,
                                                   args.use_squad_v2)
+                                                  
+                    # save model here
                     saver.save(step, model, results[args.metric_name], device)
                     ema.resume(model)
 
