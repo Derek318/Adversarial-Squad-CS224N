@@ -44,6 +44,7 @@ class SQuAD(data.Dataset):
     def __init__(self, data_path, use_v2=True):
         super(SQuAD, self).__init__()
 
+        # Takes .npz file and sends to np array
         dataset = np.load(data_path)
         self.context_idxs = torch.from_numpy(dataset['context_idxs']).long()
         self.context_char_idxs = torch.from_numpy(dataset['context_char_idxs']).long()

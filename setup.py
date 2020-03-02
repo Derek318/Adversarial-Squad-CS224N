@@ -349,6 +349,26 @@ def save(filename, obj, message=None):
 def pre_process(args):
     # Process training set and use it to decide on the word/character vocabularies
     word_counter, char_counter = Counter(), Counter()
+    print(".train_file = " + args.train_file)
+    print(".dev_file = " + args.dev_file)
+    print(".train_record_file = " + args.train_record_file)
+    print(".dev_record_file = " + args.dev_record_file)
+    print(".test_file = " + args.test_file)
+    print(".test_file = " + args.test_file)
+    print(".test_eval_file = " + args.test_eval_file)
+    print(".test_record_file = " + args.test_record_file)
+    print(".test_meta_file = " + args.test_meta_file)
+    print('------')
+    print(args.word_emb_file)
+    print(args.char_emb_file)
+    print(args.train_eval_file)
+    print(args.dev_eval_file)
+    print(args.word2idx_file)
+    print(args.char2idx_file)
+    print(args.dev_meta_file)
+    exit()
+    
+    #This takes args.train_file
     train_examples, train_eval = process_file(args.train_file, "train", word_counter, char_counter)
     word_emb_mat, word2idx_dict = get_embedding(
         word_counter, 'word', emb_file=args.glove_file, vec_size=args.glove_dim, num_vectors=args.glove_num_vecs)
@@ -357,8 +377,13 @@ def pre_process(args):
 
     # Process dev and test sets
     dev_examples, dev_eval = process_file(args.dev_file, "dev", word_counter, char_counter)
+    
+    
+    #args.train_record_file is the .npz file path that we want to save stuff to
     build_features(args, train_examples, "train", args.train_record_file, word2idx_dict, char2idx_dict)
     dev_meta = build_features(args, dev_examples, "dev", args.dev_record_file, word2idx_dict, char2idx_dict)
+    
+    
     if args.include_test_examples:
         test_examples, test_eval = process_file(args.test_file, "test", word_counter, char_counter)
         save(args.test_eval_file, test_eval, message="test eval")
@@ -375,6 +400,7 @@ def pre_process(args):
     save(args.dev_meta_file, dev_meta, message="dev meta")
 
 
+nlp = spacy.blank("en")
 if __name__ == '__main__':
     # Get command-line args
     args_ = get_setup_args()
@@ -383,7 +409,7 @@ if __name__ == '__main__':
     download(args_)
 
     # Import spacy language model
-    nlp = spacy.blank("en")
+#   nlp = spacy.blank("en")
 
     # Preprocess dataset
     args_.train_file = url_to_data_path(args_.train_url)
