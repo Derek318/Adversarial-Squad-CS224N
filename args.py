@@ -30,16 +30,16 @@ def get_setup_args():
                         default='./data/dev_meta.json')
     parser.add_argument('--test_meta_file',
                         type=str,
-                        default='./data/test_meta.json')
+                        default='./adv_data/test_meta.json')
     parser.add_argument('--word2idx_file',
                         type=str,
-                        default='./data/word2idx.json')
+                        default='./adv_data/word2idx.json')
     parser.add_argument('--char2idx_file',
                         type=str,
-                        default='./data/char2idx.json')
+                        default='./adv_data/char2idx.json')
     parser.add_argument('--answer_file',
                         type=str,
-                        default='./data/answer.json')
+                        default='./adv_data/answer.json')
     parser.add_argument('--para_limit',
                         type=int,
                         default=400,
@@ -178,28 +178,28 @@ def add_common_args(parser):
     """Add arguments common to all 3 scripts: setup.py, train.py, test.py"""
     parser.add_argument('--train_record_file',
                         type=str,
-                        default='./data/train.npz')
+                        default='./adv_data/train.npz')
     parser.add_argument('--dev_record_file',
                         type=str,
                         default='./data/dev.npz')
     parser.add_argument('--test_record_file',
                         type=str,
-                        default='./data/test.npz')
+                        default='./adv_data/test.npz')
     parser.add_argument('--word_emb_file',
                         type=str,
-                        default='./data/word_emb.json')
+                        default='./adv_data/word_emb.json')
     parser.add_argument('--char_emb_file',
                         type=str,
-                        default='./data/char_emb.json')
+                        default='./adv_data/char_emb.json')
     parser.add_argument('--train_eval_file',
                         type=str,
-                        default='./data/train_eval.json')
+                        default='./adv_data/train_eval.json')
     parser.add_argument('--dev_eval_file',
                         type=str,
                         default='./data/dev_eval.json')
     parser.add_argument('--test_eval_file',
                         type=str,
-                        default='./data/test_eval.json')
+                        default='./adv_data/test_eval.json')
 
 
 def add_train_test_args(parser):
