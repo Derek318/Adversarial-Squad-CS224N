@@ -30,16 +30,16 @@ def get_setup_args():
                         default='./data/dev_meta.json')
     parser.add_argument('--test_meta_file',
                         type=str,
-                        default='./data/test_meta.json')
+                        default='./adv_data/test_meta.json')
     parser.add_argument('--word2idx_file',
                         type=str,
-                        default='./data/word2idx.json')
+                        default='./adv_data/word2idx.json')
     parser.add_argument('--char2idx_file',
                         type=str,
-                        default='./data/char2idx.json')
+                        default='./adv_data/char2idx.json')
     parser.add_argument('--answer_file',
                         type=str,
-                        default='./data/answer.json')
+                        default='./adv_data/answer.json')
     parser.add_argument('--para_limit',
                         type=int,
                         default=400,
@@ -183,24 +183,31 @@ def add_common_args(parser,use_adv):
     parser.add_argument('--train_record_file',
                         type=str,
                         default='./' + adv_str + 'data/train.npz')
+
     parser.add_argument('--dev_record_file',
                         type=str,
                         default='./' + adv_str + 'data/dev.npz')
+  
     parser.add_argument('--test_record_file',
                         type=str,
                         default='./' + adv_str + 'data/test.npz')
+    
     parser.add_argument('--word_emb_file',
                         type=str,
                         default='./' + adv_str + 'data/word_emb.json')
+    
     parser.add_argument('--char_emb_file',
                         type=str,
                         default='./' + adv_str + 'data/char_emb.json')
+    
     parser.add_argument('--train_eval_file',
                         type=str,
                         default='./' + adv_str + 'data/train_eval.json')
+
     parser.add_argument('--dev_eval_file',
                         type=str,
                         default='./' + adv_str + 'data/dev_eval.json')
+    
     parser.add_argument('--test_eval_file',
                         type=str,
                         default='./' + adv_str + 'data/test_eval.json')

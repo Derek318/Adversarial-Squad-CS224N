@@ -366,7 +366,7 @@ def pre_process(args):
     print(args.word2idx_file)
     print(args.char2idx_file)
     print(args.dev_meta_file)
-    exit()
+    #exit()
     
     #This takes args.train_file
     train_examples, train_eval = process_file(args.train_file, "train", word_counter, char_counter)
