@@ -17,6 +17,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.utils.data as data
 import util
+import argparse
 
 from args import get_test_args
 from collections import OrderedDict
@@ -76,8 +77,12 @@ def main(args):
             cw_idxs = cw_idxs.to(device)
             qw_idxs = qw_idxs.to(device)
             batch_size = cw_idxs.size(0)
-			# Forward
+
+            # Forward
+            # CUBLAS ERROR HERE in call model()
+			      # Forward
             print(cw_idxs.size(), qw_idxs.size())
+
             log_p1, log_p2 = model(cw_idxs, qw_idxs)
             y1, y2 = y1.to(device), y2.to(device)
             loss = F.nll_loss(log_p1, y1) + F.nll_loss(log_p2, y2)
@@ -135,4 +140,9 @@ def main(args):
 
 
 if __name__ == '__main__':
-    main(get_test_args())
+    parser = argparse.ArgumentParser('Test a trained model on SQuAD')
+    parser.add_argument('--use_adv', default="no", help='Whether or not to test/train on adversarial dataset.')
+    args, unknown = parser.parse_known_args()
+    use_adv = True if (args.use_adv == 'yes') else False
+
+    main(get_test_args(use_adv))
