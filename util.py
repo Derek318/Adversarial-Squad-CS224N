@@ -337,6 +337,8 @@ def load_model(model, checkpoint_path, gpu_ids, return_step=True):
     ckpt_dict = torch.load(checkpoint_path, map_location=device)
 
     # Build model, load parameters
+    
+    # Fails to build model here
     model.load_state_dict(ckpt_dict['model_state'])
 
     if return_step:
@@ -644,7 +646,7 @@ def convert_tokens(eval_dict, qa_id, y_start_list, y_end_list, no_answer):
 
 
 def metric_max_over_ground_truths(metric_fn, prediction, ground_truths):
-    if not ground_truths:
+    if not ground_truths: # if it was unanswerable
         return metric_fn(prediction, '')
     scores_for_ground_truths = []
     for ground_truth in ground_truths:

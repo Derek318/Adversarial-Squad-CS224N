@@ -104,7 +104,7 @@ def pre_process():
     setup.save("./adv_data/word_emb.json", word_emb_mat, message="word embedding")
     setup.save("./adv_data/char_emb.json", char_emb_mat, message="char embedding")
     setup.save("./adv_data/train_eval.json", train_eval, message="adv train eval")
-    setup.save("./adv_data/dev_eval.json", dev_eval, message="adv dev eval")
+    setup.save("./adv_data/dev_eval.json", dev_val, message="adv dev eval")
     setup.save("./adv_data/word2idx.json", word2idx_dict, message="word dictionary")
     setup.save("./adv_data/char2idx.json", char2idx_dict, message="char dictionary")
     setup.save("./adv_data/dev_meta.json", dev_meta, message="adv dev meta")

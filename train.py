@@ -209,4 +209,9 @@ def evaluate(model, data_loader, device, eval_file, max_len, use_squad_v2):
 
 
 if __name__ == '__main__':
-    main(get_train_args())
+    parser = argparse.ArgumentParser('Test a trained model on SQuAD')
+    parser.add_argument('--use_adv', default="no", help='Whether or not to test/train on adversarial dataset.')
+    args, unknown = parser.parse_known_args()
+    use_adv = True if (args.use_adv == 'yes') else False
+
+    main(get_train_args(use_adv))

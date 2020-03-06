@@ -86,11 +86,11 @@ def get_setup_args():
     return args
 
 
-def get_train_args():
+def get_train_args(use_adv):
     """Get arguments needed in train.py."""
     parser = argparse.ArgumentParser('Train a model on SQuAD')
 
-    add_common_args(parser)
+    add_common_args(parser,use_adv)
     add_train_test_args(parser)
 
     parser.add_argument('--eval_steps',
@@ -135,7 +135,8 @@ def get_train_args():
                         default=0.999,
                         help='Decay rate for exponential moving average of parameters.')
 
-    args = parser.parse_args()
+    #    args = parser.parse_args()
+    args, unknown_args = parser.parse_known_args()
 
     if args.metric_name == 'NLL':
         # Best checkpoint is the one that minimizes negative log-likelihood
@@ -149,11 +150,11 @@ def get_train_args():
     return args
 
 
-def get_test_args():
+def get_test_args(use_adv):
     """Get arguments needed in test.py."""
     parser = argparse.ArgumentParser('Test a trained model on SQuAD')
 
-    add_common_args(parser)
+    add_common_args(parser, use_adv)
     add_train_test_args(parser)
 
     parser.add_argument('--split',
@@ -167,39 +168,42 @@ def get_test_args():
                         help='Name for submission file.')
 
     # Require load_path for test.py
-    args = parser.parse_args()
+#    args = parser.parse_args()
+    args, unknown_args = parser.parse_known_args()
     if not args.load_path:
         raise argparse.ArgumentError('Missing required argument --load_path')
 
     return args
 
 
-def add_common_args(parser):
+def add_common_args(parser,use_adv):
     """Add arguments common to all 3 scripts: setup.py, train.py, test.py"""
+    
+    adv_str = 'adv_' if use_adv else ''
     parser.add_argument('--train_record_file',
                         type=str,
-                        default='./data/train.npz')
+                        default='./' + adv_str + 'data/train.npz')
     parser.add_argument('--dev_record_file',
                         type=str,
-                        default='./data/dev.npz')
+                        default='./' + adv_str + 'data/dev.npz')
     parser.add_argument('--test_record_file',
                         type=str,
-                        default='./data/test.npz')
+                        default='./' + adv_str + 'data/test.npz')
     parser.add_argument('--word_emb_file',
                         type=str,
-                        default='./data/word_emb.json')
+                        default='./' + adv_str + 'data/word_emb.json')
     parser.add_argument('--char_emb_file',
                         type=str,
-                        default='./data/char_emb.json')
+                        default='./' + adv_str + 'data/char_emb.json')
     parser.add_argument('--train_eval_file',
                         type=str,
-                        default='./data/train_eval.json')
+                        default='./' + adv_str + 'data/train_eval.json')
     parser.add_argument('--dev_eval_file',
                         type=str,
-                        default='./data/dev_eval.json')
+                        default='./' + adv_str + 'data/dev_eval.json')
     parser.add_argument('--test_eval_file',
                         type=str,
-                        default='./data/test_eval.json')
+                        default='./' + adv_str + 'data/test_eval.json')
 
 
 def add_train_test_args(parser):
