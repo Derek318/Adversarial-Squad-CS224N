@@ -85,8 +85,9 @@ def main(args):
 
             # Forward
             # CUBLAS ERROR HERE in call model()
-            print("cw_indx " + str(len(cw_indxs)))
-            print("qw_indx" + str(len(cs_indxs)))
+			      # Forward
+            print(cw_idxs.size(), qw_idxs.size())
+
             log_p1, log_p2 = model(cw_idxs, qw_idxs)
             y1, y2 = y1.to(device), y2.to(device)
             loss = F.nll_loss(log_p1, y1) + F.nll_loss(log_p2, y2)
