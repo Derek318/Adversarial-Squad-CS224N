@@ -77,13 +77,17 @@ def main(args):
     with torch.no_grad(), \
             tqdm(total=len(dataset)) as progress_bar:
         for cw_idxs, cc_idxs, qw_idxs, qc_idxs, y1, y2, ids in data_loader:
-            # Setup for forward
+            # here, pass in the cw_idxs to our model by translating sentences, then figure out which sentence to keep
+	    # Setup for forward
             cw_idxs = cw_idxs.to(device)
             qw_idxs = qw_idxs.to(device)
             batch_size = cw_idxs.size(0)
 
             # Forward
             # CUBLAS ERROR HERE in call model()
+			      # Forward
+            print(cw_idxs.size(), qw_idxs.size())
+
             log_p1, log_p2 = model(cw_idxs, qw_idxs)
             y1, y2 = y1.to(device), y2.to(device)
             loss = F.nll_loss(log_p1, y1) + F.nll_loss(log_p2, y2)
