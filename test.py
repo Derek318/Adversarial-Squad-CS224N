@@ -48,6 +48,10 @@ def main(args):
                   hidden_size=args.hidden_size)
     model = nn.DataParallel(model, gpu_ids)
     log.info(f'Loading checkpoint from {args.load_path}...')
+    
+    # =======IMPORTANT=======: Failure here in load_model module.emb.embed.weight size is wrong?????? why???
+    print("PATH")
+    print(args.load_path)
     model = util.load_model(model, args.load_path, gpu_ids, return_step=False)
     model = model.to(device)
     model.eval()
@@ -73,7 +77,8 @@ def main(args):
     with torch.no_grad(), \
             tqdm(total=len(dataset)) as progress_bar:
         for cw_idxs, cc_idxs, qw_idxs, qc_idxs, y1, y2, ids in data_loader:
-            # Setup for forward
+            # here, pass in the cw_idxs to our model by translating sentences, then figure out which sentence to keep
+	    # Setup for forward
             cw_idxs = cw_idxs.to(device)
             qw_idxs = qw_idxs.to(device)
             batch_size = cw_idxs.size(0)
