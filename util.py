@@ -338,8 +338,35 @@ def load_model(model, checkpoint_path, gpu_ids, return_step=True):
 
     # Build model, load parameters
     
-    # Fails to build model here
-    model.load_state_dict(ckpt_dict['model_state'])
+    # NOTE: Fails to build model here  so commented it out for now
+#    model.load_state_dict(ckpt_dict['model_state'])
+
+    # CKPT dict has keys = ['model_name', 'model_state', 'step']
+    # Derek Added code here to manually resize dict, does it fix Cublas?????????
+    #====================== ADDED CODE HERE ============================#
+    state_dict =ckpt_dict['model_state']
+
+    from collections import OrderedDict
+    new_state_dict = OrderedDict()
+
+    for k, v in state_dict.items():
+        if 'module' not in k:
+            k = 'module.'+k
+        else:
+            k = k.replace('features.module.', 'module.features.')
+        new_state_dict[k]=v
+
+
+#    print(len(new_state_dict))
+#    #module.emb.embed.weight size is 16577 but should be 88714
+    for key,val in new_state_dict.items():
+        if len(val) == 16577:
+            print(key)
+            print(val)
+#        print(len(val))
+#    model.load_state_dict(new_state_dict)
+    exit()
+    #====================== ADDED CODE HERE ============================#
 
     if return_step:
         step = ckpt_dict['step']

@@ -73,8 +73,6 @@ def pre_process():
     # Need to create the .npz, .json files for dev, test, and train
     # this is desired structure for training/testing
     
-    #TODO: CHANGE ALL FILE PATHS TO ADV_DATA directory
-    
     args = get_setup_args()
     
     
